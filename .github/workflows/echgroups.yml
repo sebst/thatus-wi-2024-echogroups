@@ -1,0 +1,29 @@
+name: Echo Groups
+on: workflow_dispatch
+
+jobs:
+  echo-groups:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Run Some Script....
+        env:
+            DEBIAN_FRONTEND: noninteractive
+            TZ: America/Chicago
+        run: |
+          echo "::group::UpdatingApt"
+          sudo apt-get update
+          sudo apt-get upgrade -y
+          echo "::endgroup::"
+
+          echo "::group::InstallPython"
+          sudo apt-get install -y python3-pip
+          echo "::endgroup::"
+
+          echo "::group::InstallMySQL"
+          sudo apt-get update
+          sudo apt-get install -y mysql-server
+          echo "::endgroup::"
